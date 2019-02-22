@@ -11,10 +11,10 @@ We will be providing you with tasks to implement during this coding challenge (w
 Please keep in mind:
 
 * We will be evaluating every pull request you sent based on the rubric that we provided in the `rubric.md` file here.
-* You can expect to have 2-4 tasks depending on the responses. We can also stop the coding challenge after your first pull-request.
+* You can expect to have 2-3 tasks depending on the responses. We can also stop the coding challenge after your first pull-request.
 * We will not be reviewing your story/task branches, only your pull-request.
 * Please only implement what is asked in the current active task. Nothing less, nothing more. And of course pay extra attention to providing tests.
-* Please DONOT publish your solutions on a public facing profile. These coding challenges are intended for internal XING interview processes.
+* Please DO NOT publish your solutions on a public facing profile. These coding challenges are intended for internal XING interview processes.
 * We will delete this repository once the final interview process is done.
 
 ## The "Restful Endpoint"
