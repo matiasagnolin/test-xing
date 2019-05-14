@@ -5,7 +5,7 @@ Hello and welcome to this coding challenge. In this challenge, you are tasked to
 So let's get to the details, shall we?
 
 ## Task
-You will be building a Restful endpoint for getting a list of movie ids from a downstream server by providing a valid genre. You will then return full details of each movie found by merging responses from 2 additional downstream services.
+You will be building a Restful endpoint for getting a list of movie ids from a downstream server by providing a valid genre. You will then return full details of each movie found by merging responses from some downstream services.
 
 ## Acceptance Criteria
 
@@ -53,53 +53,37 @@ The response should be in the below form:
     "errors": [
         { 
             "errorCode": 440, 
-            "message": "Movie id #1000 cast info can not be retrieved", "details":  {
-                "movieId": "1000", 
-                "missingArtistIds": [4, 3000]
-            }
+            "message": "Movie id #1000 cast info may not be complete"
         },
         { 
             "errorCode": 450, 
-            "message": "Movie id #1002 details can not be retrieved",
-            "details": {
-                "movieId": "1002"
-            } 
+            "message": "Movie id #1002 details can not be retrieved"
         }
     ]
 }
 ```
-
-* Some of the fields in the response are different than what you receive as raw info from the downstream services. (e.g. releaseYear vs. releaseDate, `id`s are strings, ... etc.)
-* You need to compose the final response from different downstream services.
+* The genres are provided as a static resource in the `genres.json` file. You can either read it or hardcode them in the app.
+* Some of the fields in the response are different than what you receive as raw info from the downstream services. (e.g. `releaseYear` vs. `releaseDate`, `id`s are strings, ... etc.)
 
 ### Error Handling:
 
-* The downstream service provides a /genres endpoint (see documentation there) to return all valid genres that can be queried.  
-* Response can have missing cast info (partial response) for some of the movie details. (e.g. failing artist-info service downstream) If that is the case the `errors` should identify which cast info is missing but still return whatever is available with HTTP 200 status code. (See errorCode: 440 above)
-* Response can have missing movie details (partial response), apart from the `id`. (e.g. failing movie-info service downstream) If that is the case the `errors` should identify which cast info is missing but still return whatever is available with HTTP 200 status code. (See errorCode: 450 above)
-* Your endpoint should have a retry mechanism to handle the random 500 errors coming from the downstream service.
+* Response can have missing cast info (partial response) for some of the movie details. (e.g. failing artist-info service downstream) If that is the case, it should appear in `errors` but still return whatever is available with HTTP 200 status code. (See errorCode: 440 above)
+* Response can have missing movie details (partial response), apart from the `id`. (e.g. failing movie-info service downstream) If that is the case, it should appear in `errors` but still return whatever is available with HTTP 200 status code. (See errorCode: 450 above)
+* Your endpoint should have a retry mechanism to handle the random 500 errors coming from the downstream service. Please assume the failure rate is unknown.
 
 ## Things to remember
-* Make sure you have good test coverage.
-* Make sure your code is organized, well layered. Do not forget to review the rubric.md file to see what we are looking for. Treat this as a production codebase. 
+
+* We will be evaluating your pull request based on the rubric that we provided in the `rubric.md` file here. Treat this as a production codebase.
+* Make sure you have tests, though end-to-end testing is not required.
+* Please keep it simple, only implement what is asked here. Nothing less, nothing more.
+* Please DO NOT publish your solutions on a public facing profile. These coding challenges are intended for internal XING interview processes.
+* We will delete this repository once the final interview process is done.
 
 # How it works?
 
 You can implement this challenge in one of the following languages - Ruby, Java, Kotlin, Scala, PHP - depending on the position you are applying for. The choice of frameworks etc. are up to you.
 
 When you are ready, you need to send us a pull request. Our reviewers will review your pull request, give you feedback comments (sometimes you may be required to do some changes), and if all goes well merge your pull request and invite you to next stage of interviews. 
-
-Please keep in mind:
-
-* We will be evaluating every pull request you sent based on the rubric that we provided in the `rubric.md` file here.
-* We will not be reviewing your story/task branches, only your pull-request.
-* Please only implement what is asked here. Nothing less, nothing more. And of course pay extra attention to providing tests.
-* Please DO NOT publish your solutions on a public facing profile. These coding challenges are intended for internal XING interview processes.
-* We will delete this repository once the final interview process is done.
-
-# The Setup
-
-You can implement this coding challenge in the language/stack you are most proficient in. Please let us know beforehand what that is of course. 
 
 We provided you with a `docker-compose.yml` file that has all the downstream services you would need to use to get the data you need.
 
@@ -108,6 +92,7 @@ We provided you with a `docker-compose.yml` file that has all the downstream ser
 * When you are done, you can run `docker-compose down` to stop all the containers.
 
 # The "Downstream" services
+The failure percent of the services are not meant to be used in the app, they're only there to simulate failures in downstream dependencies.
 
 ## Movie-Search Service
 This service allows you search for movies based on genre and revenue.
