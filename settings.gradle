@@ -1,0 +1,4 @@
+rootProject.name = 'xing'
+include 'xing-the-actual-second'
+include 'xing-the-sexond'
+
