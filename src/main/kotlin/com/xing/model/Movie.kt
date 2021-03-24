@@ -1,9 +1,9 @@
 package com.xing.model
 
+
 import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.math.BigDecimal
-import java.math.BigInteger
 import java.time.LocalDateTime
 
 data class Movie(
@@ -20,14 +20,14 @@ data class Movie(
     val overview: String?,
 
     @JsonProperty("popularity")
-    val popularity: BigInteger?,
+    val popularity: Int,
 
     @JsonProperty("runtime")
     val runtime: Int?,
 
     @JsonProperty("releaseDate")
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    var releaseDate: LocalDateTime?,
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    var releaseDate: String?,
 
     @JsonProperty("revenue")
     var revenue: BigDecimal?,
@@ -42,9 +42,9 @@ data class Movie(
     val originalLanguage: String?,
 
     @JsonProperty("genres")
-    val genres: Set<Genre>?,
+    val genres: Set<Int>,
 
     @JsonProperty("cast")
-    val casts: Set<Cast>?,
+    val artists: Set<Int>,
 
     )

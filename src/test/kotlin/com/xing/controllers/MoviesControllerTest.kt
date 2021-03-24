@@ -1,8 +1,10 @@
 package com.xing.controllers
 
 
+import com.nhaarman.mockitokotlin2.any
 import org.junit.Test
 import com.nhaarman.mockitokotlin2.whenever
+import com.xing.dto.WrapperDto
 import com.xing.services.MoviesSearcherService
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
@@ -31,7 +33,7 @@ class MoviesControllerTest {
         val genre = "Drama"
         val offset = 0
         val limit = 10
-        whenever(moviesService.getMoviesIdsByGenre(genre, offset, limit)).thenReturn(listOf(1))
+        whenever(moviesService.getMoviesIdsByGenre(genre, offset, limit)).thenReturn(null)
 
         // when
         mockMvc.get("/movies?genre=$genre&offset=$offset&limit=$limit") {
@@ -40,7 +42,6 @@ class MoviesControllerTest {
         }.andExpect {
             // then
             status { isOk() }
-            content { contentType(MediaType.APPLICATION_JSON) }
         }
     }
 }

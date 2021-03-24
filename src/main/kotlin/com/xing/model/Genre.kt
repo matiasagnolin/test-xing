@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 
 data class Genre(
     @JsonProperty("id")
-    val id: Int = 0,
+    val id: Int,
 
     @JsonProperty("name")
     val genreName: String?,

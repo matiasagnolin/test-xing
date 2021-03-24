@@ -1,8 +1,9 @@
 package com.xing.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 
-data class Cast(
+data class Artist(
     @JsonProperty("id")
     val id: Int = 0,
 
@@ -15,6 +16,6 @@ data class Cast(
     @JsonProperty("profilePath")
     val profilePath: String?,
 
-    @JsonProperty("movies")
-    val movies: Set<Movie>?,
+    @JsonIgnore
+    val movies: Set<Int>?,
 )

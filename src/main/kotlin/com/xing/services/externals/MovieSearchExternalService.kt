@@ -10,20 +10,20 @@ interface MovieSearchExternalService {
     @GET("/movies")
     fun getMovieIds(
         @Query("genre") origin: String,
-        @Query("offset") offset: Int,
-        @Query("limit") limit: Int
+        @Query("offset") offset: Int?,
+        @Query("limit") limit: Int?
     ): Call<MovieSearchResponse>
 
 }
 
-data class Metadata(val offset: Int, val limit: Int, val total: Int)
+data class Metadata(val offset: Int?, val limit: Int?, val total: Int?)
+
 
 data class MovieSearchResponse(
 
     @JsonProperty("metadata")
-    val metadata: Metadata,
+    val metadata: Metadata?,
 
     @JsonProperty("data")
-    val moviesIds: List<Int>
-
+    var data: List<Int>
 )

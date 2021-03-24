@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import retrofit2.Retrofit
+import retrofit2.adapter.java8.Java8CallAdapterFactory
 import retrofit2.converter.jackson.JacksonConverterFactory
 import java.util.concurrent.TimeUnit
 
@@ -51,6 +52,7 @@ class RetrofitConfiguration(
         return Retrofit.Builder()
             .baseUrl(movieInfoUrl)
             .addConverterFactory(JacksonConverterFactory.create(objectMapper))
+            .addCallAdapterFactory(Java8CallAdapterFactory.create())
             .client(okHttpClient)
             .build()
     }
@@ -61,7 +63,6 @@ class RetrofitConfiguration(
             .baseUrl(movieSearchUrl)
             .addConverterFactory(JacksonConverterFactory.create(objectMapper))
             .client(okHttpClient)
-            .addConverterFactory(JacksonConverterFactory.create())
             .build()
     }
 
@@ -75,19 +76,18 @@ class RetrofitConfiguration(
     }
 
     @Bean
-    @Qualifier("movieSearchService")
     fun movieSearchService(@Qualifier("retrofitMovieSearchServer") retrofit: Retrofit): MovieSearchExternalService =
         retrofit.create(MovieSearchExternalService::class.java)
 
     @Bean
-    @Qualifier("movieInfoService")
     fun movieInfoService(@Qualifier("retrofitMovieInfoServer") retrofit: Retrofit): MovieInfoExternalService =
         retrofit.create(MovieInfoExternalService::class.java)
 
     @Bean
-    @Qualifier("ArtistInfoExternalService")
-    fun artistInfoExternalService(@Qualifier("retrofitArtistInfoServer")
-                                  retrofit: Retrofit): ArtistInfoExternalService {
+    fun artistInfoService(
+        @Qualifier("retrofitArtistInfoServer")
+        retrofit: Retrofit
+    ): ArtistInfoExternalService {
         return retrofit.create(ArtistInfoExternalService::class.java)
     }
 
