@@ -27,6 +27,14 @@ class MovieInfoHelper(
 
     private val msName = "MOVIE-INFO"
 
+    init {
+        circuitBreaker.eventPublisher.onStateTransition {
+            log.warn("$msName circuit breaker transitioned: $it")
+        }.onError {
+            log.error("Error on $msName circuit breaker: $it")
+        }
+    }
+
 
     @Autowired
     private lateinit var evaluateResponse: ResponseHandler<MovieInfoResponse>

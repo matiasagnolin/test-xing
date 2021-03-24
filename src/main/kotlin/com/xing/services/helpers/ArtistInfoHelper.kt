@@ -19,6 +19,7 @@ class ArtistInfoHelper(
     private val countRetry: Int,
 ) {
     private val log = LoggerFactory.getLogger(javaClass)
+    private val msName = "ARTIST-INFO"
 
     @Autowired
     private lateinit var evaluateResponse: ResponseHandler<ArtistInfoResponse>
@@ -27,18 +28,27 @@ class ArtistInfoHelper(
     @Qualifier("artistInfoService")
     private lateinit var artistInfoExternalService: ArtistInfoExternalService
 
-    private val circuitBreaker = CircuitBreaker.ofDefaults("ArtistInfo")
+    private val circuitBreaker = CircuitBreaker.ofDefaults(msName)
+
+
+    init {
+        circuitBreaker.eventPublisher.onStateTransition {
+            log.warn("$msName circuit breaker transitioned: $it")
+        }.onError {
+            log.error("Error on $msName circuit breaker: $it")
+        }
+    }
 
     fun getArtistInfo(ids: List<Int>): Response<ArtistInfoResponse> {
 
         log.info("START calling to Artist-Info ms")
         var i = 0
         var response = makeTheCall(ids)
-        var retry = evaluateResponse.responseHandler(response, "ArtistInfo", null)
+        var retry = evaluateResponse.responseHandler(response, msName, null)
 
         while (!retry and (i < countRetry)) {
             response = makeTheCall(ids)
-            retry = evaluateResponse.responseHandler(response, "ArtistInfo", null)
+            retry = evaluateResponse.responseHandler(response, msName, null)
         }
         return response
     }

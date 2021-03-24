@@ -65,7 +65,7 @@ class MoviesSearcherServiceTest {
         val response = movieSearchHelper.getMoviesId(genre, offset, limit)?.body()!!
 
         //then
-        response.data?.let { assertTrue(it.isNotEmpty()) }
+        assertTrue(response.data.isNotEmpty())
     }
 
     @Test

@@ -19,7 +19,7 @@ class ResponseHandler<T> {
             true
         } else {
             log.error("[$callType] Error calling external MS)")
-            ErrorHandler.logError(movieId, callType, response.code())
+            ErrorHandler.logError(movieId, callType)
             false
         }
     }

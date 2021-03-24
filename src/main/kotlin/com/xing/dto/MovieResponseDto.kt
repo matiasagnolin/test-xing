@@ -23,7 +23,7 @@ data class MovieResponseDto(
     val posterPath: String?,
 
     @JsonProperty("genres")
-    var genres: List<Genre>? = null,
+    var genres: List<String>? = null,
 
     @JsonProperty("cast")
     var artists: List<Artist>? = null,
